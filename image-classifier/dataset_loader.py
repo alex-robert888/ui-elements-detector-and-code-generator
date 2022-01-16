@@ -2,10 +2,11 @@ import os
 import matplotlib.pyplot as plt
 import numpy
 import cv2
-from configuration import LABELS, LABELS_PATH, TRAIN_DATA_PATH, TEST_DATA_PATH, DATASET_ROOT_DIRECTORY
+from configuration import LABELS_LIST, LABELS_DICT, LABELS_PATH, TRAIN_DATA_PATH, TEST_DATA_PATH, DATASET_ROOT_DIRECTORY
 from sklearn.model_selection import train_test_split
 from PIL import Image
 import timeit
+
 
 class DatasetLoader(object):
     def __init__(self, should_split_dataset: bool = False) -> None:
@@ -56,9 +57,8 @@ class DatasetLoader(object):
                 line = line.split(',')
                 image_path = f"{DATASET_ROOT_DIRECTORY}/{line[0]}"
                 images.append(cv2.imread(image_path))
-                labels.append(line[1])
+                labels.append(LABELS_DICT[line[1]])
 
-        stop = timeit.default_timer()
         return numpy.array(images), numpy.array(labels)
 
     def __plot_some_images(self, images, labels):
@@ -69,5 +69,5 @@ class DatasetLoader(object):
             plt.yticks([])
             plt.grid(False)
             plt.imshow(images[i])
-            plt.xlabel(labels[i])
+            plt.xlabel(LABELS_LIST[labels[i]])
         plt.show()
