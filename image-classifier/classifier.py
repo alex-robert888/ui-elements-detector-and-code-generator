@@ -23,7 +23,7 @@ class Classifier(object):
     def train_and_test(self):
         print("Start training.")
         start = timeit.default_timer()
-        self.__model = self.__create_model_resnet50()
+        self.__model = self.__create_model()
         self.__compile_model()
         self.__model.summary()
         self.__history = self.__train_model()
